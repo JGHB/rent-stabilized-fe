@@ -12,10 +12,9 @@ export default function Home() {
           <div className='text-vw-base leading-tight py-5'>
           find a rent stabilized apartment in nyc
           </div>
-          <a className='text-vw-sub pt-5 underline hover:font-bold hover:cursor-pointer p-0'>view available apartments</a>
-          <a className='text-vw-sub underline hover:font-bold hover:cursor-pointer'>view available apartments</a>
-          <a className='text-vw-sub underline hover:font-bold hover:cursor-pointer'>view available apartments</a>
-          {/* <a className='text-vw-sub underline hover:font-bold hover:cursor-pointer'>view available apartments</a> */}
+          <Link href='/listings' className='text-vw-sub pt-5 underline hover:font-bold hover:cursor-pointer p-0'>view available apartments</Link>
+          <Link href='/listings' className='text-vw-sub underline hover:font-bold hover:cursor-pointer'>view available apartments</Link>
+          <Link href='/listings' className='text-vw-sub underline hover:font-bold hover:cursor-pointer'>view available apartments</Link>
 
         </div>
         <div className='flex w-full items-center justify-center'>

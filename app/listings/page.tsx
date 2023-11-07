@@ -2,6 +2,20 @@ import Image from 'next/image'
 import StickyHeader from '../components/StickyHeader'
 import key from  '../../public/key.svg'
 import Link from 'next/link';
+import Neighborhood from '../components/NeighborhoodComponent';
+
+// Define the structure for an individual apartment listing
+interface Apartment {
+  neighborhood: string;
+  bedrooms: string;
+  address: string;
+  price: number;
+}
+
+// Define the structure for the object that groups apartments by neighborhood
+interface ApartmentsByNeighborhood {
+  [key: string]: Apartment[];
+}
 
 const apartmentsTestData = {
   "listings": [
@@ -48,17 +62,37 @@ const apartmentsTestData = {
   ]
 }
 
+// Initialize the object with the keys for Manhattan, Brooklyn, and Harlem
+let apartmentsByNeighborhood: ApartmentsByNeighborhood = {
+  Manhattan: [],
+  Brooklyn: [],
+  Harlem: [],
+};
+
+apartmentsTestData.listings.forEach((apartment: Apartment) => {
+  const neighborhood: string = apartment.neighborhood;
+  if (!apartmentsByNeighborhood[neighborhood]) {
+    apartmentsByNeighborhood[neighborhood] = [];
+  }
+  apartmentsByNeighborhood[neighborhood].push(apartment);
+});
+
+
 
 export default function Page() {
   return (
     <div className="">
-      {apartmentsTestData.listings.map((listing) => (
-        <div key={listing.address} className="flex flex-row items-center">
-          <div className='text-n whitespace-nowrap overflow-hidden text-overflow-ellipsis max-w-xs'>{listing.address}</div>
-          <div className="border-dotted border-b-2 pt-2.5 border-black flex-grow"/>
-          <div>{listing.price}</div>
-        </div>
-      ))}
+      <StickyHeader/>
+      <div className="md:grid md:grid-cols-2 md:gap-4 px-5"> {/* This sets up the grid */}
+        {Object.keys(apartmentsByNeighborhood).map(neighborhood => (
+          <div key={neighborhood} className="mb-4 md:mb-0"> {/* Each child becomes a grid item */}
+            <Neighborhood
+              name={neighborhood}
+              apartments={apartmentsByNeighborhood[neighborhood]}
+            />
+          </div>
+        ))}
+      </div>
     </div>
-  )
+  );
 }
